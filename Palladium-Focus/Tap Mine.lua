@@ -12,10 +12,10 @@ return Def.ActorFrame {
         Bones="bomb color.txt",
         FeverMessageCommand=function(self,params)
             if params.pn ~= sPlayer then return end
-            if params.Active then
-                self:diffuse(color(PalladiumFocusColorTable["Fret 6"]))
-            elseif string.find(sButton, "Strum") then
+            if string.find(sButton, "Strum") then
                 self:diffuse(0.1,0.1,0.1,1)
+            elseif params.Active then
+                self:diffuse(color(PalladiumFocusFeverTable[sButton]))
             else
                 self:diffuse(color(PalladiumFocusColorTable[sButton]))
             end

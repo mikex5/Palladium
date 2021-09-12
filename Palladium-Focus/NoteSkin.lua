@@ -10,6 +10,25 @@ PalladiumFocusColorTable =
     ["Strum Up"] = "0.8,0.1,0.9,1"
 }
 
+--This is calculated automagically, but you can change this if you wanna
+PalladiumFocusFeverTable = 
+{
+    ["Fret 6"] = PalladiumFocusColorTable["Fret 6"]
+}
+local color1 = color(PalladiumFocusColorTable["Fret 1"])
+local color2 = color(PalladiumFocusColorTable["Fret 6"])
+PalladiumFocusFeverTable["Fret 1"] = string.format("%f,%f,%f,1",((2 * color1[1]) + color2[1]) * 0.33,((2 * color1[2]) + color2[2]) * 0.33,((2 * color1[3]) + color2[3]) * 0.33)
+color1 = color(PalladiumFocusColorTable["Fret 2"])
+PalladiumFocusFeverTable["Fret 2"] = string.format("%f,%f,%f,1",((2 * color1[1]) + color2[1]) * 0.33,((2 * color1[2]) + color2[2]) * 0.33,((2 * color1[3]) + color2[3]) * 0.33)
+color1 = color(PalladiumFocusColorTable["Fret 3"])
+PalladiumFocusFeverTable["Fret 3"] = string.format("%f,%f,%f,1",((2 * color1[1]) + color2[1]) * 0.33,((2 * color1[2]) + color2[2]) * 0.33,((2 * color1[3]) + color2[3]) * 0.33)
+color1 = color(PalladiumFocusColorTable["Fret 4"])
+PalladiumFocusFeverTable["Fret 4"] = string.format("%f,%f,%f,1",((2 * color1[1]) + color2[1]) * 0.33,((2 * color1[2]) + color2[2]) * 0.33,((2 * color1[3]) + color2[3]) * 0.33)
+color1 = color(PalladiumFocusColorTable["Fret 5"])
+PalladiumFocusFeverTable["Fret 5"] = string.format("%f,%f,%f,1",((2 * color1[1]) + color2[1]) * 0.33,((2 * color1[2]) + color2[2]) * 0.33,((2 * color1[3]) + color2[3]) * 0.33)
+color1 = color(PalladiumFocusColorTable["Strum Up"])
+PalladiumFocusFeverTable["Strum Up"] = string.format("%f,%f,%f,1",((2 * color1[1]) + color2[1]) * 0.33,((2 * color1[2]) + color2[2]) * 0.33,((2 * color1[3]) + color2[3]) * 0.33)
+
 local Nskin = {}
 
 --Defining on which direction the other directions should be bassed on

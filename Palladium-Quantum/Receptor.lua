@@ -28,8 +28,10 @@ local feverActive = false
 local feverExplosion = Def.ActorFrame{}
 
 local starBurst = function(self,params)
-    if params.Missed then return end
-    self:stoptweening():x(self.startPos):z(8):diffuse(color(PalladiumQuantumColorTable["Fever"])):decelerate(math.random(30,100) / 100):z(math.random(60,90)):x(self.startPos+math.random(-100,100)):rotationz(math.random(-179,179)):diffusealpha(0)
+    if params.Amount > self.prevAmount then
+        self:stoptweening():x(self.startPos):z(8):diffuse(color(PalladiumColorTable["Fret 6"])):decelerate(math.random(30,100) / 100):z(math.random(60,90)):x(self.startPos+math.random(-100,100)):rotationz(math.random(-179,179)):diffusealpha(0)
+        self.prevAmount = params.Amount
+    end
 end
 
 for i = 1,16 do
@@ -37,8 +39,19 @@ for i = 1,16 do
         InitCommand=function(self)
             self:diffusealpha(0):zoom(.8):rotationx(90):x((25*i) - 212)
             self.startPos = (25*i) - 212
+            self.prevAmount = 0
         end,
-        FeverMissedMessageCommand=starBurst,
+        FeverMissedMessageCommand=function(self,params)
+            if params.Missed then
+                self.comboSuccess = false
+            else
+                self.comboSuccess = true
+            end
+        end,
+        FeverScoreMessageCommand=starBurst,
+        FeverMessageCommand=function(self,params)
+            self.prevAmount = 0
+        end,
         Def.Sprite {
             Texture='partfever.png'
         }

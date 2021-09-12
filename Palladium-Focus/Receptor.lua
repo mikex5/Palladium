@@ -55,7 +55,7 @@ local Push = Def.ActorFrame{
         FeverMessageCommand=function(self,params)
             if params.pn ~= sPlayer then return end
             if params.Active then
-                self:diffuse(color(PalladiumFocusColorTable["Fret 6"]))
+                self:diffuse(color(PalladiumFocusFeverTable[sButton]))
             else
                 self:diffuse(color(PalladiumFocusColorTable[sButton]))
             end
@@ -88,7 +88,7 @@ local Push = Def.ActorFrame{
         FeverMessageCommand=function(self,params)
             if params.pn ~= sPlayer then return end
             if params.Active then
-                self:diffuse(color(PalladiumFocusColorTable["Fret 6"]))
+                self:diffuse(color(PalladiumFocusFeverTable[sButton]))
             else
                 self:diffuse(color(PalladiumFocusColorTable[sButton]))
             end
@@ -167,8 +167,10 @@ return Def.ActorFrame {
             else
                 self.curColor = color("1,1,1,1")
             end
-            if self.Amount >= 50 then
-                self:diffuseshift():effectcolor1(color(PalladiumFocusColorTable["Fret 6"])):effectcolor2(self.curColor):effectperiod(2)
+            if self.Amount >= 100 then
+                self:diffuseblink():effectcolor1(color(PalladiumFocusColorTable["Fret 6"])):effectcolor2(self.curColor):effectperiod(1.5)
+            elseif self.Amount >= 50 then
+                self:diffuseblink():effectcolor1(color(PalladiumFocusColorTable["Fret 6"])):effectcolor2(self.curColor):effectperiod(2.5)
             else
                 self:stopeffect():stoptweening():diffuse(self.curColor)
             end
@@ -177,8 +179,10 @@ return Def.ActorFrame {
             if params.pn ~= sPlayer then return end
             self.Amount = params.Amount;
             if not self.Active then
-                if self.Amount >= 50 then 
-                    self:diffuseshift():effectcolor1(color(PalladiumFocusColorTable["Fret 6"])):effectcolor2(self.curColor):effectperiod(2)
+                if self.Amount >= 100 then
+                    self:diffuseblink():effectcolor1(color(PalladiumFocusColorTable["Fret 6"])):effectcolor2(self.curColor):effectperiod(1.5)
+                elseif self.Amount >= 50 then 
+                    self:diffuseblink():effectcolor1(color(PalladiumFocusColorTable["Fret 6"])):effectcolor2(self.curColor):effectperiod(2.5)
                 else
                     self:stopeffect():stoptweening():diffuse(self.curColor)
                 end
@@ -199,7 +203,7 @@ return Def.ActorFrame {
         FeverMessageCommand=function(self,params)
             if params.pn ~= sPlayer then return end
             if params.Active then
-                self:diffuse(color(PalladiumFocusColorTable["Fret 6"]))
+                self:diffuse(color(PalladiumFocusFeverTable[sButton]))
             else
                 self:diffuse(color(PalladiumFocusColorTable[sButton]))
             end

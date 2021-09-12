@@ -6,9 +6,7 @@ return Def.ActorFrame {
     Def.Model { --fever note color
         InitCommand=function(self)
             if string.find(sButton, "Strum") then
-                local color1 = color(PalladiumFocusColorTable[sButton])
-                local color2 = color(PalladiumFocusColorTable["Fret 6"])
-                self:rotationx(90):diffuse((color1[1] + color2[1]) * 0.5, (color1[2] + color2[2]) * 0.5, (color1[3] + color2[3]) * 0.5, 1)
+                self:rotationx(90):diffuse(color(PalladiumFocusFeverTable[sButton]))
             else
                 self:rotationx(90):diffuse(color(PalladiumFocusColorTable[sButton]))
             end
@@ -27,12 +25,10 @@ return Def.ActorFrame {
             if params.pn ~= sPlayer then return end
             if tonumber(sEffect) > 0 then
                 if params.Active then
-                    self:diffuse(color(PalladiumFocusColorTable["Fret 6"]))
+                    self:diffuse(color(PalladiumFocusFeverTable[sButton]))
                 else
                     if string.find(sButton, "Strum") then
-                        local color1 = color(PalladiumFocusColorTable[sButton])
-                        local color2 = color(PalladiumFocusColorTable["Fret 6"])
-                        self:diffuse((color1[1] + color2[1]) * 0.5, (color1[2] + color2[2]) * 0.5, (color1[3] + color2[3]) * 0.5, 1)
+                        self:diffuse(color(PalladiumFocusFeverTable[sButton]))
                     else
                         self:diffuse(color(PalladiumFocusColorTable[sButton]))
                     end
@@ -134,7 +130,7 @@ return Def.ActorFrame {
         FeverMessageCommand=function(self,params)
             if params.pn ~= sPlayer then return end
             if params.Active then
-                self:diffuse(color(PalladiumFocusColorTable["Fret 6"]))
+                self:diffuse(color(PalladiumFocusFeverTable[sButton]))
             else
                 self:diffuse(color(PalladiumFocusColorTable[sButton]))
             end
