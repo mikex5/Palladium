@@ -4,17 +4,17 @@ local Explosion = Def.ActorFrame{}
 
 local ExploCom = function(self)
     if string.find(sButton, "Strum") then
-        self:stoptweening():z(5):diffuse(1,1,1,1):zoom(1):linear(.15):z(30):zoom(.5):decelerate(.1):z(50):diffusealpha(0):zoom(.3)
+        self:stoptweening():z(5):diffuse(color(PalladiumColorTable[sButton])):zoom(1):linear(.15):z(30):zoom(.5):decelerate(.1):z(50):diffusealpha(0):zoom(.3)
     else
-        self:stoptweening():z(5):diffuse(1,1,1,1):zoom(1):zoomy(10):linear(.15):z(math.random(40,60)):diffuse(1,.8,.1,1):zoom(.5):zoomy(8):decelerate(.1):z(math.random(60,90)):diffuse(.5,.1,0,0):zoom(.2):zoomy(1)
+        self:stoptweening():z(5):diffuse(1,1,1,.8):zoomx(1):zoomy(10):linear(.15):z(math.random(30,60)):diffuse(1,.8,.1,.7):zoomx(.5):zoomy(8):decelerate(.1):z(math.random(60,100)):diffuse(.5,.1,0,0):zoomx(.2):zoomy(1)
     end
 end
 
 local ExploFlash = function(self)
     if string.find(sButton, "Strum") then
-        self:stoptweening():diffuse(1,1,1,1):zoomx(8):linear(.08):diffusealpha(.7):zoomx(12):decelerate(.08):diffusealpha(0):zoomx(16)
+        self:stoptweening():diffuse(color(PalladiumColorTable[sButton])):zoomx(8):linear(.08):diffusealpha(.7):zoomx(12):decelerate(.08):diffusealpha(0):zoomx(16)
     else
-        self:stoptweening():diffuse(1,1,1,1):zoom(2.5):linear(.08):diffuse(1,.8,.1,.7):zoom(3.2):decelerate(.08):diffuse(.5,.1,0,0):zoom(2)
+        self:stoptweening():diffuse(1,1,1,.8):zoom(2.5):linear(.08):diffuse(1,.8,.1,.7):zoom(3.2):decelerate(.08):diffuse(.5,.1,0,0):zoom(2)
     end
 end
 
@@ -25,7 +25,7 @@ end
 for i = 1,12 do
     Explosion[#Explosion+1] = Def.ActorFrame{
         InitCommand=function(self)
-            self:diffusealpha(0):zoom(1)
+            self:diffusealpha(0)
             if string.find(sButton, "Strum") then
                 self:xy((30*i) - 195, 15)
             else
@@ -50,7 +50,7 @@ return Def.ActorFrame {
     Def.Sprite {
         Texture='particle.png',
         InitCommand=function(self)
-            self:diffuse(1,1,1,0):zoom(1):xyz(0,0,5)
+            self:diffuse(1,1,1,0):xyz(0,0,5)
         end,
         W1Command=ExploFlash,
         W2Command=ExploFlash,

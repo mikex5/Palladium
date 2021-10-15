@@ -39,12 +39,19 @@ A variation of Palladium that uses colors to indicate beat quantizations instead
 * Initial version
 
 **9/12/21**  
-* General:
+* General:  
     * Fixed issue where fever collection explosion would occur on the note after acquiring fever  
     * Tap mines now have a consistent color for the strum lane  
 * Palladium-Focus:  
     * Notes and receptors retain 66% of their respective lane color when fever is active
     * Rings now flash instead of pulse when fever is ready, and flash more quickly when fever is 100%
+
+**10/14/21**  
+* General:  
+    * Improved the look of open notes  
+    * Improved the look of taps notes  
+    * Improved the look of tap explosions  
+    * Fixed clipping issue of distant gem parts
 
 -----
 

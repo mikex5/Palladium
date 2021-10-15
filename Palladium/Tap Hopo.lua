@@ -184,7 +184,7 @@ return Def.ActorFrame {
     Def.Model { --shiny thing
         InitCommand=function(self) self:backfacecull(false):rotationx(90):zoomx(1.5):zoomz(1.5) end,
         Meshes=string.find(sButton, "Strum") and "non.txt" or "shine.txt",
-        Materials="shine.txt",
+        Materials="resource/Shine mats.txt",
         Bones="shine.txt"
     }
 }

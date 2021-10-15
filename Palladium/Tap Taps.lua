@@ -180,5 +180,11 @@ return Def.ActorFrame {
                 end
             end
         end
+    },
+    Def.Model { --anti shiny thing
+        InitCommand=function(self) self:backfacecull(false):rotationx(90):zoomx(1.5):zoomz(1.5) end,
+        Meshes=string.find(sButton, "Strum") and "non.txt" or "shine.txt",
+        Materials="resource/Darkshine mats.txt",
+        Bones="shine.txt"
     }
 }

@@ -6,9 +6,11 @@ return Def.ActorFrame {
     Def.Model { --fever note color
         InitCommand=function(self)
             if string.find(sButton, "Strum") then
-                self:rotationx(90):diffuse(color(PalladiumFocusFeverTable[sButton]))
+                local color1 = color(PalladiumColorTable[sButton])
+                local color2 = color(PalladiumColorTable["Fret 6"])
+                self:rotationx(90):diffuse((color1[1] + color2[1]) * 0.5, (color1[2] + color2[2]) * 0.5, (color1[3] + color2[3]) * 0.5, 1)
             else
-                self:rotationx(90):diffuse(color(PalladiumFocusColorTable[sButton]))
+                self:rotationx(90):diffuse(color(PalladiumColorTable[sButton]))
             end
             if tonumber(sEffect) <= 0 then
                 self:diffusealpha(0)
@@ -25,12 +27,14 @@ return Def.ActorFrame {
             if params.pn ~= sPlayer then return end
             if tonumber(sEffect) > 0 then
                 if params.Active then
-                    self:diffuse(color(PalladiumFocusFeverTable[sButton]))
+                    self:diffuse(color(PalladiumColorTable["Fret 6"]))
                 else
                     if string.find(sButton, "Strum") then
-                        self:diffuse(color(PalladiumFocusFeverTable[sButton]))
+                        local color1 = color(PalladiumColorTable[sButton])
+                        local color2 = color(PalladiumColorTable["Fret 6"])
+                        self:diffuse((color1[1] + color2[1]) * 0.5, (color1[2] + color2[2]) * 0.5, (color1[3] + color2[3]) * 0.5, 1)
                     else
-                        self:diffuse(color(PalladiumFocusColorTable[sButton]))
+                        self:diffuse(color(PalladiumColorTable[sButton]))
                     end
                 end
                 if self.isHidden then
@@ -53,7 +57,7 @@ return Def.ActorFrame {
     },
     Def.Model { --fever note glow
         InitCommand=function(self)
-            self:rotationx(90):diffuse(color(PalladiumFocusColorTable["Fret 6"]))
+            self:rotationx(90):diffuse(color(PalladiumColorTable["Fret 6"]))
             if tonumber(sEffect) <= 0 then
                 self:diffusealpha(0)
                 self.isHidden = true
@@ -68,7 +72,7 @@ return Def.ActorFrame {
         FeverMessageCommand=function(self,params)
             if params.pn ~= sPlayer then return end
             if tonumber(sEffect) > 0 then
-                self:diffuse(color(PalladiumFocusColorTable["Fret 6"]))
+                self:diffuse(color(PalladiumColorTable["Fret 6"]))
                 if self.isHidden then
                     self:diffusealpha(0)
                 end
@@ -116,7 +120,7 @@ return Def.ActorFrame {
     },
     Def.Model { --regular note color
         InitCommand=function(self)
-            self:rotationx(90):diffuse(color(PalladiumFocusColorTable[sButton]))
+            self:rotationx(90):diffuse(color(PalladiumColorTable[sButton]))
             if tonumber(sEffect) > 0 then
                 self:diffusealpha(0)
                 self.isHidden = true
@@ -130,9 +134,9 @@ return Def.ActorFrame {
         FeverMessageCommand=function(self,params)
             if params.pn ~= sPlayer then return end
             if params.Active then
-                self:diffuse(color(PalladiumFocusFeverTable[sButton]))
+                self:diffuse(color(PalladiumColorTable["Fret 6"]))
             else
-                self:diffuse(color(PalladiumFocusColorTable[sButton]))
+                self:diffuse(color(PalladiumColorTable[sButton]))
             end
             if self.isHidden then
                 self:diffusealpha(0)
@@ -180,7 +184,7 @@ return Def.ActorFrame {
     Def.Model { --shiny thing
         InitCommand=function(self) self:backfacecull(false):rotationx(90):zoomx(1.5):zoomz(1.5) end,
         Meshes=string.find(sButton, "Strum") and "non.txt" or "shine.txt",
-        Materials="shine.txt",
+        Materials="resource/Shine mats.txt",
         Bones="shine.txt"
     }
 }
