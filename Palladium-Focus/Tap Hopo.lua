@@ -5,13 +5,7 @@ local sPlayer = Var "Player"
 return Def.ActorFrame {
     Def.Model { --fever note color
         InitCommand=function(self)
-            if string.find(sButton, "Strum") then
-                local color1 = color(PalladiumColorTable[sButton])
-                local color2 = color(PalladiumColorTable["Fret 6"])
-                self:rotationx(90):diffuse((color1[1] + color2[1]) * 0.5, (color1[2] + color2[2]) * 0.5, (color1[3] + color2[3]) * 0.5, 1)
-            else
-                self:rotationx(90):diffuse(color(PalladiumColorTable[sButton]))
-            end
+            self:rotationx(90):diffuse(color(PalladiumFocusColorTable[sButton]))
             if tonumber(sEffect) <= 0 then
                 self:diffusealpha(0)
                 self.isHidden = true
@@ -20,22 +14,16 @@ return Def.ActorFrame {
             end
         end,
         --If this is not a fever note from the get-go, don't even bother loading the real model
-        Meshes=(tonumber(sEffect) <= 0 and "non.txt") or (string.find(sButton, "Strum") and "strum color.txt") or "star color.txt",
-        Materials=(string.find(sButton, "Strum") and "resource/Strum hopo mats.txt") or "resource/Fret mats.txt",
-        Bones="star color.txt",
+        Meshes=(tonumber(sEffect) <= 0 and "models/non.txt") or (string.find(sButton, "Strum") and "models/strum color.txt") or "models/star color.txt",
+        Materials=(string.find(sButton, "Strum") and "models/materials/Strum mats.txt") or "models/materials/Fret mats.txt",
+        Bones="models/star color.txt",
         FeverMessageCommand=function(self,params)
             if params.pn ~= sPlayer then return end
             if tonumber(sEffect) > 0 then
                 if params.Active then
-                    self:diffuse(color(PalladiumColorTable["Fret 6"]))
+                    self:diffuse(color(PalladiumFocusFeverTable[sButton]))
                 else
-                    if string.find(sButton, "Strum") then
-                        local color1 = color(PalladiumColorTable[sButton])
-                        local color2 = color(PalladiumColorTable["Fret 6"])
-                        self:diffuse((color1[1] + color2[1]) * 0.5, (color1[2] + color2[2]) * 0.5, (color1[3] + color2[3]) * 0.5, 1)
-                    else
-                        self:diffuse(color(PalladiumColorTable[sButton]))
-                    end
+                    self:diffuse(color(PalladiumFocusColorTable[sButton]))
                 end
                 if self.isHidden then
                     self:diffusealpha(0)
@@ -57,7 +45,7 @@ return Def.ActorFrame {
     },
     Def.Model { --fever note glow
         InitCommand=function(self)
-            self:rotationx(90):diffuse(color(PalladiumColorTable["Fret 6"]))
+            self:rotationx(90):diffuse(color(PalladiumFocusColorTable["Fret 6"]))
             if tonumber(sEffect) <= 0 then
                 self:diffusealpha(0)
                 self.isHidden = true
@@ -66,13 +54,13 @@ return Def.ActorFrame {
             end
         end,
         --If this is not a fever note from the get-go, don't even bother loading the real model
-        Meshes=(tonumber(sEffect) <= 0 and "non.txt") or (string.find(sButton, "Strum") and "non.txt") or "star glow.txt",
-        Materials=(string.find(sButton, "Strum") and "resource/Strum hopo mats.txt") or "resource/Fret mats.txt",
-        Bones="star glow.txt",
+        Meshes=(tonumber(sEffect) <= 0 and "models/non.txt") or (string.find(sButton, "Strum") and "models/non.txt") or "models/star glow.txt",
+        Materials=(string.find(sButton, "Strum") and "models/materials/Strum fever mats.txt") or "models/materials/Fret mats.txt",
+        Bones="models/star glow.txt",
         FeverMessageCommand=function(self,params)
             if params.pn ~= sPlayer then return end
             if tonumber(sEffect) > 0 then
-                self:diffuse(color(PalladiumColorTable["Fret 6"]))
+                self:diffuse(color(PalladiumFocusColorTable["Fret 6"]))
                 if self.isHidden then
                     self:diffusealpha(0)
                 end
@@ -102,9 +90,9 @@ return Def.ActorFrame {
             end
         end,
         --If this is not a fever note from the get-go, don't even bother loading the real model
-        Meshes=(tonumber(sEffect) <= 0 and "non.txt") or (string.find(sButton, "Strum") and "strum.txt") or "star.txt",
-        Materials=(string.find(sButton, "Strum") and "resource/Strum hopo mats.txt") or "resource/Fret mats.txt",
-        Bones="star.txt",
+        Meshes=(tonumber(sEffect) <= 0 and "models/non.txt") or (string.find(sButton, "Strum") and "models/non.txt") or "models/star.txt",
+        Materials=(string.find(sButton, "Strum") and "models/materials/Strum mats.txt") or "models/materials/Fret mats.txt",
+        Bones="models/star.txt",
         FeverMissedMessageCommand=function(self,params)
             if params.pn ~= sPlayer then return end
             if tonumber(sEffect) > 0 then
@@ -120,7 +108,7 @@ return Def.ActorFrame {
     },
     Def.Model { --regular note color
         InitCommand=function(self)
-            self:rotationx(90):diffuse(color(PalladiumColorTable[sButton]))
+            self:rotationx(90):diffuse(color(PalladiumFocusColorTable[sButton]))
             if tonumber(sEffect) > 0 then
                 self:diffusealpha(0)
                 self.isHidden = true
@@ -128,15 +116,15 @@ return Def.ActorFrame {
                 self.isHidden = false
             end
         end,
-        Meshes=string.find(sButton, "Strum") and "strum color.txt" or "gem color.txt",
-        Materials=(string.find(sButton, "Strum") and "resource/Strum hopo mats.txt") or "resource/Fret mats.txt",
-        Bones="gem color.txt",
+        Meshes=string.find(sButton, "Strum") and "models/strum color.txt" or "models/gem color.txt",
+        Materials=(string.find(sButton, "Strum") and "models/materials/Strum mats.txt") or "models/materials/Fret mats.txt",
+        Bones="models/gem color.txt",
         FeverMessageCommand=function(self,params)
             if params.pn ~= sPlayer then return end
             if params.Active then
-                self:diffuse(color(PalladiumColorTable["Fret 6"]))
+                self:diffuse(color(PalladiumFocusFeverTable[sButton]))
             else
-                self:diffuse(color(PalladiumColorTable[sButton]))
+                self:diffuse(color(PalladiumFocusColorTable[sButton]))
             end
             if self.isHidden then
                 self:diffusealpha(0)
@@ -165,9 +153,9 @@ return Def.ActorFrame {
                 self.isHidden = false
             end
         end,
-        Meshes=string.find(sButton, "Strum") and "strum.txt" or "gem.txt",
-        Materials=(string.find(sButton, "Strum") and "resource/Strum hopo mats.txt") or "resource/Fret mats.txt",
-        Bones="gem.txt",
+        Meshes=string.find(sButton, "Strum") and "models/strum.txt" or "models/gem.txt",
+        Materials=(string.find(sButton, "Strum") and "models/materials/Strum mats.txt") or "models/materials/Fret mats.txt",
+        Bones="models/gem.txt",
         FeverMissedMessageCommand=function(self,params)
             if params.pn ~= sPlayer then return end
             if tonumber(sEffect) > 0 then
@@ -182,9 +170,9 @@ return Def.ActorFrame {
         end
     },
     Def.Model { --shiny thing
-        InitCommand=function(self) self:backfacecull(false):rotationx(90):zoomx(1.5):zoomz(1.5) end,
-        Meshes=string.find(sButton, "Strum") and "non.txt" or "shine.txt",
-        Materials="resource/Shine mats.txt",
-        Bones="shine.txt"
+        InitCommand=function(self) self:backfacecull(false):rotationx(90):rotationy(90) end,
+        Meshes=string.find(sButton, "Strum") and "models/strumshine.txt" or "models/shine.txt",
+        Materials="models/materials/Shine mats.txt",
+        Bones="models/shine.txt"
     }
 }

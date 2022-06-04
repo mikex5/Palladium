@@ -12,8 +12,6 @@ A standard GH noteskin that will look and feel familiar to GH and CH veterans. C
 * Colors are easily customized by editing the table at the top of NoteSkin.lua  
 * Easily identifiable notetypes with color, animation, and a variety of materials
 
-*Coming eventually: holds that can be recolored instead of using the default note colors*
-
 -----
 
 ## Palladium-Focus
@@ -35,8 +33,26 @@ A variation of Palladium that uses colors to indicate beat quantizations instead
 
 ### Changelog
 
-**9/8/21**  
-* Initial version
+**6/3/22**  
+Long overdue overhaul!  
+* General:  
+    * Use new simpleholds to recolor the hold parts and have them react to fever  
+    * Redo a lot, lot of materials and textures  
+    * Better explosions for taps and strums  
+    * Animations are snappier and more consistent  
+    * Fixed more clipping stuff  
+    * New new model for strums  
+    * Sane folder organization  
+    * More stuff I probably forgot about  
+* Palladium-Quantum:  
+    * Hold parts are colored now too  
+
+**10/14/21**  
+* General:  
+    * Improved the look of open notes  
+    * Improved the look of taps notes  
+    * Improved the look of tap explosions  
+    * Fixed clipping issue of distant gem parts
 
 **9/12/21**  
 * General:  
@@ -46,12 +62,8 @@ A variation of Palladium that uses colors to indicate beat quantizations instead
     * Notes and receptors retain 66% of their respective lane color when fever is active
     * Rings now flash instead of pulse when fever is ready, and flash more quickly when fever is 100%
 
-**10/14/21**  
-* General:  
-    * Improved the look of open notes  
-    * Improved the look of taps notes  
-    * Improved the look of tap explosions  
-    * Fixed clipping issue of distant gem parts
+**9/8/21**  
+* Initial version
 
 -----
 

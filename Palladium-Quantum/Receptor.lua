@@ -4,6 +4,17 @@ if not GHReceptor then GHReceptor = {} end
 if not GHReceptor[sPlayer] then GHReceptor[sPlayer] = {} end
 if not GHReceptor[sPlayer][sButton] then GHReceptor[sPlayer][sButton] = {} end
 
+-- Here's a map for what GHReceptor is since it's gotten so convoluted
+-- First is per player, then per button (Fret 1, Fret 2,... Fret 5)
+-- [0] = Nothing. Lua lists start at 1 for some cursed reason
+-- [1] = The entire assembled receptor for a column
+-- [2] = Whether the fret is being pressed down or not
+-- [3] = Idle inner receptor (colored part)
+-- [4] = Idle inner receptor (non-colored part)
+-- [5] = Active inner receptor (colored part)
+-- [6] = Active inner receptor (non-colored part)
+-- [7] = Metal column under the inner receptor
+
 local Buttons = {
     "Fret 1",
     "Fret 2",
@@ -29,7 +40,7 @@ local feverExplosion = Def.ActorFrame{}
 
 local starBurst = function(self,params)
     if params.Amount > self.prevAmount then
-        self:stoptweening():x(self.startPos):z(8):diffuse(color(PalladiumColorTable["Fret 6"])):decelerate(math.random(30,100) / 100):z(math.random(60,90)):x(self.startPos+math.random(-100,100)):rotationz(math.random(-179,179)):diffusealpha(0)
+        self:stoptweening():x(self.startPos):z(8):diffuse(color(PalladiumQuantumColorTable["Fever"])):decelerate(math.random(30,100) / 100):z(math.random(60,90)):x(self.startPos+math.random(-100,100)):rotationz(math.random(-179,179)):diffusealpha(0)
         self.prevAmount = params.Amount
     end
 end
@@ -53,7 +64,7 @@ for i = 1,16 do
             self.prevAmount = 0
         end,
         Def.Sprite {
-            Texture='partfever.png'
+            Texture='sprites/partfever.png'
         }
     }
 end
@@ -100,7 +111,7 @@ if sButton == "Strum Up" then
                 InitCommand=function(self)
                     self:xy(184,-48):draworder(110)
                 end,
-                Texture='feveroverlay.png'
+                Texture='sprites/feveroverlay.png'
             },
             PressCommand=function(self) --Function to make the receptors bop? why here?
                 local FretActive = false
@@ -113,6 +124,9 @@ if sButton == "Strum Up" then
                     for _,v in ipairs(Buttons) do
                         GHReceptor[sPlayer][v][3]:stoptweening():diffusealpha(1):z(6):sleep(.1):bounceend(.1):z(0):diffusealpha(1)
                         GHReceptor[sPlayer][v][4]:stoptweening():diffusealpha(1):z(6):sleep(.1):bounceend(.1):z(0):diffusealpha(1)
+                        GHReceptor[sPlayer][v][5]:stoptweening():diffusealpha(0)
+                        GHReceptor[sPlayer][v][6]:stoptweening():diffusealpha(0)
+                        GHReceptor[sPlayer][v][7]:stoptweening():diffusealpha(0)
                     end
                 end
             end
@@ -251,13 +265,13 @@ if sButton == "Strum Up" then
                     self:y(-110):diffusealpha(0)
                 end,
                 Def.Sprite{
-                    Texture="feversprite1.png",
+                    Texture="sprites/feversprite1.png",
                     InitCommand=function(self)
                         self:x(-102):diffuse(color(PalladiumQuantumColorTable["Fever"])):zoom(4)
                     end
                 },
                 Def.Sprite{
-                    Texture="feversprite1.png",
+                    Texture="sprites/feversprite1.png",
                     InitCommand=function(self)
                         self:x(102):zoomx(-4):zoomy(4):diffuse(color(PalladiumQuantumColorTable["Fever"]))
                     end
@@ -318,9 +332,9 @@ local Push = Def.ActorFrame{
                 self:diffusealpha(0)
             end
         end,
-        Meshes="inner_receptor_idle color.txt",
-        Materials="inner_receptor_idle color.txt",
-        Bones="inner_receptor_idle color.txt"
+        Meshes="models/inner_receptor_idle color.txt",
+        Materials="models/inner_receptor_idle color.txt",
+        Bones="models/inner_receptor_idle color.txt"
     },
     Def.Model {
         InitCommand=function(self)
@@ -329,13 +343,13 @@ local Push = Def.ActorFrame{
         end,
         PressCommand=function(self) self:diffusealpha(0) end,
         LiftCommand=function(self) self:sleep(self:GetTweenTimeLeft()):diffusealpha(1) end,
-        Meshes="inner_receptor_idle.txt",
-        Materials="inner_receptor_idle.txt",
-        Bones="inner_receptor_idle.txt"
+        Meshes="models/inner_receptor_idle.txt",
+        Materials="models/inner_receptor_idle.txt",
+        Bones="models/inner_receptor_idle.txt"
     },
     Def.Model {
         InitCommand=function(self)
-            self:diffuse(color(PalladiumQuantumColorTable["192nd"])):diffusealpha(0):rotationx(90):rotationy(120 + offsetChart[sButton])
+            self:diffuse(color(PalladiumQuantumColorTable["192nd"])):diffusealpha(0):rotationx(90):rotationy(120 + offsetChart[sButton]):zoom(1.01)
             GHReceptor[sPlayer][sButton][5] = self
         end,
         PressCommand=function(self) self:diffusealpha(1):decelerate(.1):z(-3) end,
@@ -351,9 +365,9 @@ local Push = Def.ActorFrame{
                 self:diffusealpha(0)
             end
         end,
-        Meshes="inner_receptor_active color.txt",
-        Materials="inner_receptor_active color.txt",
-        Bones="inner_receptor_active color.txt"
+        Meshes="models/inner_receptor_active color.txt",
+        Materials="models/inner_receptor_active color.txt",
+        Bones="models/inner_receptor_active color.txt"
     },
     Def.Model {
         InitCommand=function(self)
@@ -362,9 +376,9 @@ local Push = Def.ActorFrame{
         end,
         PressCommand=function(self) self:diffusealpha(1):decelerate(.1):z(-3) end,
         LiftCommand=function(self) self:sleep(self:GetTweenTimeLeft()):diffusealpha(0):z(0) end,
-        Meshes="inner_receptor_active.txt",
-        Materials="inner_receptor_active.txt",
-        Bones="inner_receptor_active.txt"
+        Meshes="models/inner_receptor_active.txt",
+        Materials="models/inner_receptor_active.txt",
+        Bones="models/inner_receptor_active.txt"
     },
     Def.Model {
         InitCommand=function(self)
@@ -373,18 +387,18 @@ local Push = Def.ActorFrame{
         end,
         PressCommand=function(self) self:diffusealpha(1):zoomy(0.5):z(-3) end,
         LiftCommand=function(self) self:sleep(self:GetTweenTimeLeft()):diffusealpha(0):zoomy(1):z(0) end,
-        Meshes="metal.txt",
-        Materials="metal.txt",
-        Bones="metal.txt"
+        Meshes="models/metal.txt",
+        Materials="models/metal.txt",
+        Bones="models/metal.txt"
     }
 }
 
 local hitCommand = function(self)
-    GHReceptor[sPlayer][sButton][3]:stoptweening():diffusealpha(0):z(16):sleep(.1):accelerate(.1):z(0)
-    GHReceptor[sPlayer][sButton][4]:stoptweening():diffusealpha(0):z(16):sleep(.1):accelerate(.1):z(0)
-    GHReceptor[sPlayer][sButton][5]:stoptweening():diffusealpha(1):z(16):sleep(.1):accelerate(.1):z(-3)
-    GHReceptor[sPlayer][sButton][6]:stoptweening():diffusealpha(1):z(16):sleep(.1):accelerate(.1):z(-3)
-    GHReceptor[sPlayer][sButton][7]:stoptweening():diffusealpha(1):z(18):zoomy(4):sleep(.1):accelerate(.1):z(-3):zoomy(.5)
+    GHReceptor[sPlayer][sButton][3]:stoptweening():diffusealpha(0):bounceend(.05):z(12):accelerate(.1):z(0)
+    GHReceptor[sPlayer][sButton][4]:stoptweening():diffusealpha(0):bounceend(.05):z(12):accelerate(.1):z(0)
+    GHReceptor[sPlayer][sButton][5]:stoptweening():diffusealpha(1):bounceend(.05):z(12):accelerate(.1):z(-3)
+    GHReceptor[sPlayer][sButton][6]:stoptweening():diffusealpha(1):bounceend(.05):z(12):accelerate(.1):z(-3)
+    GHReceptor[sPlayer][sButton][7]:stoptweening():diffusealpha(1):bounceend(.05):z(14):zoomy(3.5):accelerate(.1):z(-3):zoomy(.5)
 end
 
 return Def.ActorFrame {
@@ -409,10 +423,10 @@ return Def.ActorFrame {
         end
     },
     Def.Model {
-        InitCommand=function(self) self:rotationx(90):diffuse(color(PalladiumQuantumColorTable["192nd"])) end,
-        Meshes="outer_receptor color.txt",
-        Materials="outer_receptor color.txt",
-        Bones="outer_receptor color.txt",
+        InitCommand=function(self) self:rotationx(90):diffuse(color(PalladiumQuantumColorTable["192nd"])):zoom(0.99) end,
+        Meshes="models/outer_receptor color.txt",
+        Materials="models/outer_receptor color.txt",
+        Bones="models/outer_receptor color.txt",
         FeverMessageCommand=function(self,params)
             if params.pn ~= sPlayer then return end
             if params.Active then
@@ -423,10 +437,10 @@ return Def.ActorFrame {
         end
     },
     Def.Model {
-        InitCommand=function(self) self:rotationx(90) end,
-        Meshes="outer_receptor.txt",
-        Materials="outer_receptor.txt",
-        Bones="outer_receptor.txt",
+        InitCommand=function(self) self:rotationx(90):zoom(.99) end,
+        Meshes="models/outer_receptor.txt",
+        Materials="models/outer_receptor.txt",
+        Bones="models/outer_receptor.txt",
     },
     Push
 }

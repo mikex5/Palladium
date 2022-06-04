@@ -2,11 +2,11 @@
 PalladiumQuantumColorTable = 
 {
     ["4th"] = "1,0.1,0.1,1",
-    ["8th"] = "0.1,0.1,1,1",
+    ["8th"] = "0.1,0.2,1,1",
     ["12th"] = "0.8,0.1,0.9,1",
     ["16th"] = "1,1,0.1,1",
-    ["24th"] = ".9,0,.7,1",
-    ["32nd"] = ".9,.5,0,1",
+    ["24th"] = ".9,0.1,.7,1",
+    ["32nd"] = ".9,.55,0.1,1",
     ["48th"] = "0.4,1,1,1",
     ["64th"] = "0.1,1,0.1,1",
     ["192nd"] = "0.5,0.5,0.5,1",
@@ -98,28 +98,31 @@ function Nskin.Load()
 
     --Setting global button
     local Button = Nskin.ButtonRedir[sButton] or "Down"
-                
+
     --Setting global element
+    sElement = string.gsub(sElement, "Simple", "")
     local Element = Nskin.ElementRedir[sElement] or sElement
-    
+
     if string.find(Element, "Lift") then
         --We want to make this a global noteskin so we will use "Center" for fallback for unknown buttons.
         Button = Nskin.ButtonRedir[sButton] or "Center"
     end
-    
+
     if string.find(Element, "Tap Note") or
        string.find(Element, "Tap Taps") or
        string.find(Element, "Tap Hopo") or
        string.find(Element, "Tap Explosion") or
        string.find(Element, "Hold Explosion") or
+       string.find(Element, "Hold Body") or
+       string.find(Element, "Hold Bottomcap") or
        string.find(Element, "Tap Mine") or
        string.find(Element, "Receptor") then
         Button = ""
     end
 
     --Returning first part of the code, The redirects, Second part is for commands
-    local t = {}
-
+    local t = LoadActor(NOTESKIN:GetPath(Button,Element))
+    
     --Set blank redirects
     if Nskin.Blank[sElement] then
         t = Def.Actor {}
@@ -127,10 +130,6 @@ function Nskin.Load()
         if Var "SpriteOnly" then
             t = LoadActor(NOTESKIN:GetPath("","_blank"))
         end
-    elseif string.find(Element, "Hold") and not string.find(Button, "Strum") then
-        t = LoadActor(Element)
-    else
-        t = LoadActor(NOTESKIN:GetPath(Button,Element))
     end
     
     if Nskin.PartsToRotate[sElement] then

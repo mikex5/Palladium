@@ -4,10 +4,10 @@ PalladiumFocusColorTable =
     ["Fret 1"] = "0.1,1,0.1,1",
     ["Fret 2"] = "1,0.1,0.1,1",
     ["Fret 3"] = "1,1,0.1,1",
-    ["Fret 4"] = "0.1,0.1,1,1",
-    ["Fret 5"] = ".9,.5,0,1",
+    ["Fret 4"] = "0.1,0.2,1,1",
+    ["Fret 5"] = "1,.55,.1,1",
     ["Fret 6"] = "0.4,1,1,1",
-    ["Strum Up"] = "0.8,0.1,0.9,1"
+    ["Strum Up"] = "0.6,0.1,0.7,1"
 }
 
 --This is calculated automagically, but you can change this if you wanna
@@ -17,17 +17,17 @@ PalladiumFocusFeverTable =
 }
 local color1 = color(PalladiumFocusColorTable["Fret 1"])
 local color2 = color(PalladiumFocusColorTable["Fret 6"])
-PalladiumFocusFeverTable["Fret 1"] = string.format("%f,%f,%f,1",((2 * color1[1]) + color2[1]) * 0.33,((2 * color1[2]) + color2[2]) * 0.33,((2 * color1[3]) + color2[3]) * 0.33)
+PalladiumFocusFeverTable["Fret 1"] = string.format("%f,%f,%f,1",(color1[1] + color2[1]) * 0.5,(color1[2] + color2[2]) * 0.5,(color1[3] + color2[3]) * 0.5)
 color1 = color(PalladiumFocusColorTable["Fret 2"])
-PalladiumFocusFeverTable["Fret 2"] = string.format("%f,%f,%f,1",((2 * color1[1]) + color2[1]) * 0.33,((2 * color1[2]) + color2[2]) * 0.33,((2 * color1[3]) + color2[3]) * 0.33)
+PalladiumFocusFeverTable["Fret 2"] = string.format("%f,%f,%f,1",(color1[1] + color2[1]) * 0.5,(color1[2] + color2[2]) * 0.5,(color1[3] + color2[3]) * 0.5)
 color1 = color(PalladiumFocusColorTable["Fret 3"])
-PalladiumFocusFeverTable["Fret 3"] = string.format("%f,%f,%f,1",((2 * color1[1]) + color2[1]) * 0.33,((2 * color1[2]) + color2[2]) * 0.33,((2 * color1[3]) + color2[3]) * 0.33)
+PalladiumFocusFeverTable["Fret 3"] = string.format("%f,%f,%f,1",(color1[1] + color2[1]) * 0.5,(color1[2] + color2[2]) * 0.5,(color1[3] + color2[3]) * 0.5)
 color1 = color(PalladiumFocusColorTable["Fret 4"])
-PalladiumFocusFeverTable["Fret 4"] = string.format("%f,%f,%f,1",((2 * color1[1]) + color2[1]) * 0.33,((2 * color1[2]) + color2[2]) * 0.33,((2 * color1[3]) + color2[3]) * 0.33)
+PalladiumFocusFeverTable["Fret 4"] = string.format("%f,%f,%f,1",(color1[1] + color2[1]) * 0.5,(color1[2] + color2[2]) * 0.5,(color1[3] + color2[3]) * 0.5)
 color1 = color(PalladiumFocusColorTable["Fret 5"])
-PalladiumFocusFeverTable["Fret 5"] = string.format("%f,%f,%f,1",((2 * color1[1]) + color2[1]) * 0.33,((2 * color1[2]) + color2[2]) * 0.33,((2 * color1[3]) + color2[3]) * 0.33)
+PalladiumFocusFeverTable["Fret 5"] = string.format("%f,%f,%f,1",(color1[1] + color2[1]) * 0.5,(color1[2] + color2[2]) * 0.5,(color1[3] + color2[3]) * 0.5)
 color1 = color(PalladiumFocusColorTable["Strum Up"])
-PalladiumFocusFeverTable["Strum Up"] = string.format("%f,%f,%f,1",((2 * color1[1]) + color2[1]) * 0.33,((2 * color1[2]) + color2[2]) * 0.33,((2 * color1[3]) + color2[3]) * 0.33)
+PalladiumFocusFeverTable["Strum Up"] = string.format("%f,%f,%f,1",(color1[1] + color2[1]) * 0.5,(color1[2] + color2[2]) * 0.5,(color1[3] + color2[3]) * 0.5)
 
 local Nskin = {}
 
@@ -114,20 +114,23 @@ function Nskin.Load()
 
     --Setting global button
     local Button = Nskin.ButtonRedir[sButton] or "Down"
-                
+
     --Setting global element
+    sElement = string.gsub(sElement, "Simple", "")
     local Element = Nskin.ElementRedir[sElement] or sElement
-    
+
     if string.find(Element, "Lift") then
         --We want to make this a global noteskin so we will use "Center" for fallback for unknown buttons.
         Button = Nskin.ButtonRedir[sButton] or "Center"
     end
-    
+
     if string.find(Element, "Tap Note") or
        string.find(Element, "Tap Taps") or
        string.find(Element, "Tap Hopo") or
        string.find(Element, "Tap Explosion") or
        string.find(Element, "Hold Explosion") or
+       string.find(Element, "Hold Body") or
+       string.find(Element, "Hold Bottomcap") or
        string.find(Element, "Tap Mine") or
        string.find(Element, "Receptor") then
         Button = ""
